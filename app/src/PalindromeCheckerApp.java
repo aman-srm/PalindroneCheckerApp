@@ -10,7 +10,7 @@ public class PalindromeCheckerApp{
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        boolean result = isPalindrome(input);
 
         if (result) {
             System.out.println("The string is a Palindrome.");
@@ -21,20 +21,32 @@ public class PalindromeCheckerApp{
         scanner.close();
     }
 
-    // Recursive method
-    public static boolean isPalindrome(String str, int left, int right) {
+    public static boolean isPalindrome(String str) {
 
-        // Base Condition
-        if (left >= right) {
-            return true;
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < right) {
+
+            // Skip non-alphanumeric characters
+            while (left < right && !Character.isLetterOrDigit(str.charAt(left))) {
+                left++;
+            }
+
+            while (left < right && !Character.isLetterOrDigit(str.charAt(right))) {
+                right--;
+            }
+
+            // Compare ignoring case
+            if (Character.toLowerCase(str.charAt(left)) != 
+                Character.toLowerCase(str.charAt(right))) {
+                return false;
+            }
+
+            left++;
+            right--;
         }
 
-        // If mismatch found
-        if (str.charAt(left) != str.charAt(right)) {
-            return false;
-        }
-
-        // Recursive Call (move inward)
-        return isPalindrome(str, left + 1, right - 1);
+        return true;
     }
 }
