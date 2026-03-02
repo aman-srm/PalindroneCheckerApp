@@ -6,30 +6,24 @@ public class PalindromeCheckerApp {
     public static void main(String[] var0) {
       Scanner scanner = new Scanner(System.in);
 
-        // Ask user for input
-        System.out.print("Enter a word to check: ");
-        String word = scanner.nextLine();
+        System.out.print("Enter a string: ");
+        String original = scanner.nextLine();
 
-        // Reverse the string
         String reversed = "";
 
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reversed = reversed + word.charAt(i);
+        // Reverse using for loop
+        for (int i = original.length() - 1; i >= 0; i--) {
+            reversed = reversed + original.charAt(i);
         }
+        
 
-        // Check palindrome
-        if (word.equals(reversed)) {
-            System.out.println("The word \"" + word + "\" is a Palindrome.");
+        // Compare strings using equals()
+        if (original.equals(reversed)) {
+            System.out.println("The string is a Palindrome.");
         } else {
-            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
+            System.out.println("The string is NOT a Palindrome.");
         }
 
-        System.out.println("-----------------------------------------");
-        System.out.println("Application execution completed.");
-
-        // Close scanner
         scanner.close();
    }
-    
-
 }
