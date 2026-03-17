@@ -1,6 +1,9 @@
 package app.src;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
@@ -11,9 +14,21 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        PalindromeCheckerApp checker = new PalindromeCheckerApp();
+        System.out.println("Choose strategy:");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
 
-        boolean result = checker.checkPalindrome(input);
+        int choice = sc.nextInt();
+
+        PalindromeStrategy strategy;
+
+        if (choice == 1) {
+            strategy = new StackStrategy();
+        } else {
+            strategy = new DequeStrategy();
+        }
+
+        boolean result = strategy.checkPalindrome(input);
 
         if (result) {
             System.out.println("The string is a palindrome.");
@@ -23,15 +38,48 @@ public class PalindromeCheckerApp {
 
         sc.close();
     }
+}
 
-    public boolean checkPalindrome(String str) {
+interface PalindromeStrategy {
+    boolean checkPalindrome(String input);
+}
+
+class StackStrategy implements PalindromeStrategy {
+
+    public boolean checkPalindrome(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
 
         String reversed = "";
 
-        for (int i = str.length() - 1; i >= 0; i--) {
-            reversed += str.charAt(i);
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
         }
 
-        return str.equals(reversed);
+        return input.equals(reversed);
+    }
+}
+
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean checkPalindrome(String input) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
