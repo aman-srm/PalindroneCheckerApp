@@ -2,51 +2,36 @@ package app.src;
 
 import java.util.Scanner;
 
-public class PalindromeCheckerApp{
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
 
-        boolean result = isPalindrome(input);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+        PalindromeCheckerApp checker = new PalindromeCheckerApp();
+
+        boolean result = checker.checkPalindrome(input);
 
         if (result) {
-            System.out.println("The string is a Palindrome.");
+            System.out.println("The string is a palindrome.");
         } else {
-            System.out.println("The string is NOT a Palindrome.");
+            System.out.println("The string is not a palindrome.");
         }
 
-        scanner.close();
+        sc.close();
     }
 
-    public static boolean isPalindrome(String str) {
+    public boolean checkPalindrome(String str) {
 
-        int left = 0;
-        int right = str.length() - 1;
+        String reversed = "";
 
-        while (left < right) {
-
-            // Skip non-alphanumeric characters
-            while (left < right && !Character.isLetterOrDigit(str.charAt(left))) {
-                left++;
-            }
-
-            while (left < right && !Character.isLetterOrDigit(str.charAt(right))) {
-                right--;
-            }
-
-            // Compare ignoring case
-            if (Character.toLowerCase(str.charAt(left)) != 
-                Character.toLowerCase(str.charAt(right))) {
-                return false;
-            }
-
-            left++;
-            right--;
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
         }
 
-        return true;
+        return str.equals(reversed);
     }
 }
